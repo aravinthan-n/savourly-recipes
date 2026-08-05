@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * RecipeBuilder
+ * RecipeBuilder test fixture builder.
  *
  * @author Aravinthan Narasimhan
  */
 public class RecipeBuilder {
 
-    private Recipe recipe = new Recipe();
+    private final Recipe recipe = new Recipe();
 
     public Recipe build() {
         return recipe;
@@ -43,7 +43,7 @@ public class RecipeBuilder {
     public static List<Recipe> getOneRecipe() {
         Recipe lemonChicken = buildRecipe("1", "Lemon Chicken", 30, "Lemon", "Chicken", "Thyme");
 
-        List<Recipe> recipeList = new ArrayList<Recipe>();
+        List<Recipe> recipeList = new ArrayList<>();
         recipeList.add(lemonChicken);
         return recipeList;
     }
@@ -53,7 +53,7 @@ public class RecipeBuilder {
         Recipe beefStroganoff = buildRecipe("2", "Beef Stroganoff", 30, "Beef", "Mustard", "Mushrooms");
         Recipe caesarSalad = buildRecipe("3", "Caesar Salad", 25, "Lettuce", "Croutons", "Parmesan");
 
-        List<Recipe> recipeList = new ArrayList<Recipe>();
+        List<Recipe> recipeList = new ArrayList<>();
         recipeList.add(lemonChicken);
         recipeList.add(beefStroganoff);
         recipeList.add(caesarSalad);
@@ -75,7 +75,7 @@ public class RecipeBuilder {
 
         Recipe dosa = buildRecipe("10", "Dosa", 90, "Rice flour", "Urad Dhal");
 
-        List<Recipe> recipeList = new ArrayList<Recipe>();
+        List<Recipe> recipeList = new ArrayList<>();
         recipeList.add(lemonChicken);
         recipeList.add(beefStroganoff);
         recipeList.add(caesarSalad);
@@ -110,8 +110,7 @@ public class RecipeBuilder {
         Recipe idly = buildRecipe("11", "Idly", 90, "Rice flour", "Urad Dhal");
         Recipe roti = buildRecipe("12", "Roti", 40, "Wheat flour");
 
-
-        List<Recipe> recipeList = new ArrayList<Recipe>();
+        List<Recipe> recipeList = new ArrayList<>();
         recipeList.add(lemonChicken);
         recipeList.add(beefStroganoff);
         recipeList.add(caesarSalad);
@@ -133,13 +132,5 @@ public class RecipeBuilder {
 
     public static Recipe buildRecipe(String id, String name, int cookingMinutes, String... ingredients) {
         return new RecipeBuilder().withId(id).withName(name).withCookingMinutes(cookingMinutes).addIngredients(ingredients).build();
-    }
-
-    public static List<Recipe> getRecipes() {
-        //return Collections.<Recipe>emptyList();
-        //return getOneRecipe();
-        //return getThreeRecipes();
-        return getTenRecipes();
-        //return getTwelveRecipes();
     }
 }

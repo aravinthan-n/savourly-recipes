@@ -1,0 +1,35 @@
+# Target build directory
+target/
+*.war
+*.jar
+*.ear
+
+# Maven local & tool directories
+.maven/
+.m2/
+
+# IDE files and directories
+.idea/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+.nb-gradle/
+.nb-properties/
+nbproject/
+.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Log files
+*.log
+logs/
+
+# Agent/Temp files
+.antigravity/
