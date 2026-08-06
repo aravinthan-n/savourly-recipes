@@ -9,7 +9,7 @@
         </layout>
     </appender>
 
-    <logger name="co.uk.foodco.recipes">
+    <logger name="co.uk.savourly.recipes">
         <level value="debug"/>
     </logger>
 

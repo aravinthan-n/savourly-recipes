@@ -1,4 +1,4 @@
-package co.uk.foodco.recipes.web;
+package co.uk.savourly.recipes.web;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackages = {"co.uk.foodco.recipes"})
+@ComponentScan(basePackages = {"co.uk.savourly.recipes"})
 public class RecipesMvcConfig implements WebMvcConfigurer {
 
     @Override

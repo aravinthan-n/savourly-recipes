@@ -1,4 +1,4 @@
-package co.uk.foodco.recipes.web;
+package co.uk.savourly.recipes.web;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -26,6 +26,6 @@ public class RecipesWebAppInitializer implements WebApplicationInitializer {
                 "recipes-rest", new DispatcherServlet(dispatcherServlet));
         restDispatcher.setLoadOnStartup(1);
         restDispatcher.setAsyncSupported(true);
-        restDispatcher.addMapping("/foodcompany/*");
+        restDispatcher.addMapping("/api/*");
     }
 }

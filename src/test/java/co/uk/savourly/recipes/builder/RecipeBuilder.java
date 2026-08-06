@@ -1,6 +1,6 @@
-package co.uk.foodco.recipes.builder;
+package co.uk.savourly.recipes.builder;
 
-import co.uk.foodco.recipes.model.Recipe;
+import co.uk.savourly.recipes.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;

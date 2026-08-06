@@ -1,4 +1,4 @@
-# 🍳 FoodCo Recipes Web Application
+# 🍳 Savourly Recipes Web Application
 
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)
 ![Java Version](https://img.shields.io/badge/JDK-25-orange.svg)
@@ -6,14 +6,17 @@
 ![Cucumber Version](https://img.shields.io/badge/Cucumber_Java-7.21.1-green.svg)
 ![JUnit Version](https://img.shields.io/badge/JUnit-5.11.4-red.svg)
 
-A modern, full-stack Java web application for managing, filtering, searching, and starring culinary recipes. Built with **Spring MVC 6**, **Java 25**, **Jakarta EE Servlet 6.0**, and backed by comprehensive **Behavior-Driven Development (BDD)** tests using **Cucumber Java 7** and **JUnit 5**.
+A modern, full-stack web application for managing, filtering, searching, and starring culinary recipes. Built with **Spring MVC 6**, **Java 25**, **Jakarta EE Servlet 6.0**, **AngularJS**, and backed by comprehensive **Behavior-Driven Development (BDD)** tests using **Cucumber Java 7** and **JUnit 5**.
 
 ---
 
 ## 📋 Table of Contents
 
+- [📱 Application Type](#-application-type)
 - [🌟 Key Features](#-key-features)
-- [🛠️ Technology Stack](#️-technology-stack)
+- [🛠️ Complete Technology Stack](#️-complete-technology-stack)
+  - [☕ Backend Tech Stack](#-backend-tech-stack)
+  - [🎨 Frontend Tech Stack](#-frontend-tech-stack)
 - [📂 Project Structure](#-project-structure)
 - [🚀 Getting Started & Test Suite](#-getting-started--test-suite)
 - [💻 Running the Web Application Locally](#-running-the-web-application-locally)
@@ -24,6 +27,16 @@ A modern, full-stack Java web application for managing, filtering, searching, an
   - [Method 3: Running in IDE](#method-3-running-in-ide-intellij-idea--eclipse)
 - [🥒 Cucumber Feature Specifications](#-cucumber-feature-specifications)
 - [🤝 Contributing & License](#-contributing--license)
+
+---
+
+## 📱 Application Type
+
+**Savourly** is a **Full-Stack Monolithic Web Application** designed for culinary recipe management, dynamic ingredient search, prep-time filtering, and user recipe favoriting/starring.
+
+- **Architecture**: Single Page Application (SPA) frontend decoupled via RESTful HTTP JSON services from a high-performance Spring MVC Java backend.
+- **Deployment Model**: Packaged as a standard Jakarta Web Application Archive (`.war`) deployable to any modern Servlet container (Tomcat 10+, Jetty 11+, Payara 6+) or executed directly via embedded Eclipse Jetty.
+- **Testing Architecture**: Fully isolated in-memory domain state backend allowing instantaneous Behavior-Driven Development (BDD) scenario execution with 100% reproducible state reset per test run.
 
 ---
 
@@ -41,16 +54,26 @@ A modern, full-stack Java web application for managing, filtering, searching, an
 
 ---
 
-## 🛠️ Technology Stack
+## 🛠️ Complete Technology Stack
 
-- **Language**: Java 25 (OpenJDK 25)
-- **Framework**: Spring Framework 6.2.2 (Spring MVC, Spring AOP, Spring Context)
-- **Specification**: Jakarta Servlet API 6.0
-- **BDD Testing**: Cucumber Java 7.21.1, Cucumber JUnit Platform Engine
-- **Unit Testing & Mocking**: JUnit 5 (JUnit Jupiter 5.11.4), Mockito 5.14.0, ByteBuddy 1.15.11
-- **JSON Processing**: Jackson 2.18.2
-- **Logging**: SLF4J 2.0.16 & Logback 1.5.16
-- **Frontend**: AngularJS, Angular Route, Angular UI Bootstrap, Bootstrap CSS
+### ☕ Backend Tech Stack
+
+- **Language & Runtime**: Java 25 (OpenJDK 25)
+- **Core Framework**: Spring Framework 6.2.2 (`spring-mvc`, `spring-context`, `spring-aop`, `@ComponentScan`)
+- **Servlet Specification**: Jakarta Servlet API 6.0 (Jakarta EE 10 specification via `DispatcherServlet`)
+- **JSON Processing**: Jackson Databind 2.18.2 (RESTful JSON request/response payloads)
+- **Embedded Web Server Engine**: Eclipse Jetty Plugin for Maven (`jetty-maven-plugin`)
+- **Behavior-Driven Development (BDD)**: Cucumber Java 7.21.1, Cucumber JUnit Platform Engine, Gherkin feature specifications
+- **Unit Testing & Mocking**: JUnit 5 (JUnit Jupiter 5.11.4 & Platform Engine 1.11.4), Mockito 5.14.0, ByteBuddy 1.15.11
+- **Logging Infrastructure**: SLF4J 2.0.16, Logback 1.5.16, Log4j 1.2 XML configuration bridge
+
+### 🎨 Frontend Tech Stack
+
+- **Client Framework**: AngularJS 1.x (Single Page Application architecture with dynamic scope bindings)
+- **Client-Side Routing**: Angular Route (`angular-route.js` for view switching without full page reloads)
+- **REST API Client**: Angular Resource (`angular-resource.js` using `$resource` for RESTful HTTP operations against `/api/recipe`)
+- **UI Design & Components**: Angular UI Bootstrap (`ui-bootstrap-tpls-0.13.0.js`) & Bootstrap 3 CSS (Responsive grid, navigation, tables, pagination controls)
+- **Styling & Layout**: HTML5 & CSS3
 
 ---
 
@@ -58,12 +81,12 @@ A modern, full-stack Java web application for managing, filtering, searching, an
 
 ```
 recipes-web-app/
-├── pom.xml                                   # Maven POM configured for JDK 25 & modern dependencies
+├── pom.xml                                   # Maven POM configured for Savourly, JDK 25 & modern dependencies
 ├── README.md                                 # Project documentation
 ├── .gitignore                                # Standard git ignore rules
 └── src/
     ├── main/
-    │   ├── java/co/uk/foodco/recipes/
+    │   ├── java/co/uk/savourly/recipes/
     │   │   ├── builder/                      # Recipe test data builders
     │   │   ├── controller/                   # Spring MVC REST Controllers
     │   │   ├── model/                        # Domain models (Recipe, Ingredient, User, Recipes)
@@ -71,10 +94,10 @@ recipes-web-app/
     │   │   ├── service/                      # Business logic service interfaces & implementation
     │   │   ├── util/                         # Application constants
     │   │   └── web/                          # Spring Web MVC config & Servlet Initializer
-    │   ├── resources/                        # Logging configuration
+    │   ├── resources/                        # Logging configuration (log4j.xml)
     │   └── webapp/                           # AngularJS frontend UI & static assets
     └── test/
-        ├── java/co/uk/foodco/recipes/
+        ├── java/co/uk/savourly/recipes/
         │   ├── cucumber/
         │   │   ├── RunCucumberTest.java      # JUnit 5 Cucumber Test Runner
         │   │   └── RecipeSteps.java          # Cucumber Java Step Definitions
@@ -128,8 +151,8 @@ Running tests automatically produces:
    ```
 
 3. Once the server starts, open your browser and navigate to:
-   - **Frontend UI App**: [http://localhost:8080/foodcompany/recipe/](http://localhost:8080/foodcompany/recipe/)
-   - **REST API Endpoint**: [http://localhost:8080/foodcompany/foodcompany/recipe](http://localhost:8080/foodcompany/foodcompany/recipe)
+   - **Frontend UI App**: [http://localhost:8080/savourly/recipes/](http://localhost:8080/savourly/recipes/)
+   - **REST API Endpoint**: [http://localhost:8080/savourly/api/recipe](http://localhost:8080/savourly/api/recipe)
 
 ---
 
@@ -145,7 +168,7 @@ mvn jetty:run -Dserver.port=8081
 mvn jetty:run -Dserver.port=9090
 ```
 
-When running on port `8081`, access the app at [http://localhost:8081/foodcompany/recipe/](http://localhost:8081/foodcompany/recipe/).
+When running on port `8081`, access the app at [http://localhost:8081/savourly/recipes/](http://localhost:8081/savourly/recipes/).
 
 ---
 
@@ -176,8 +199,8 @@ mvn jetty:run -Dserver.port=9090 -DtotalRecipes=5
    mvn clean package
    ```
 2. The generated web application archive will be created at:
-   `target/foodcompany.war`
-3. Deploy `foodcompany.war` into your Servlet container (Tomcat 10+, Jetty 11+, or Payara 6+).
+   `target/savourly.war`
+3. Deploy `savourly.war` into your Servlet container (Tomcat 10+, Jetty 11+, or Payara 6+).
 
 ---
 
@@ -187,7 +210,7 @@ mvn jetty:run -Dserver.port=9090 -DtotalRecipes=5
 2. Configure **JDK 25** as the Project SDK / Java Compiler.
 3. Create a new Maven Run Configuration:
    - **Command**: `jetty:run -Dserver.port=8080`
-4. Click **Run** or **Debug** to start the local web application server on `http://localhost:8080/foodcompany/recipe/`.
+4. Click **Run** or **Debug** to start the local web application server on `http://localhost:8080/savourly/recipes/`.
 
 ---
 
@@ -204,4 +227,4 @@ mvn jetty:run -Dserver.port=9090 -DtotalRecipes=5
 
 ## 🤝 Contributing & License
 
-Developed for **FoodCo Recipes**. Open for development and extension.
+Developed for **Savourly Recipes**. Open for development and extension.

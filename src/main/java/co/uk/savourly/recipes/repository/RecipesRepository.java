@@ -1,8 +1,8 @@
-package co.uk.foodco.recipes.repository;
+package co.uk.savourly.recipes.repository;
 
-import co.uk.foodco.recipes.model.Recipe;
-import co.uk.foodco.recipes.model.Recipes;
-import co.uk.foodco.recipes.model.User;
+import co.uk.savourly.recipes.model.Recipe;
+import co.uk.savourly.recipes.model.Recipes;
+import co.uk.savourly.recipes.model.User;
 
 import java.util.List;
 

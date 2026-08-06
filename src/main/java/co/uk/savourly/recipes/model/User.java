@@ -1,4 +1,4 @@
-package co.uk.foodco.recipes.model;
+package co.uk.savourly.recipes.model;
 
 import java.util.ArrayList;
 import java.util.List;

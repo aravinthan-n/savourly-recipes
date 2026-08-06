@@ -1,9 +1,9 @@
-package co.uk.foodco.recipes;
+package co.uk.savourly.recipes;
 
-import co.uk.foodco.recipes.model.Recipe;
-import co.uk.foodco.recipes.model.Recipes;
-import co.uk.foodco.recipes.repository.InMemoryRecipesRepositoryStub;
-import co.uk.foodco.recipes.service.DefaultRecipesService;
+import co.uk.savourly.recipes.model.Recipe;
+import co.uk.savourly.recipes.model.Recipes;
+import co.uk.savourly.recipes.repository.InMemoryRecipesRepositoryStub;
+import co.uk.savourly.recipes.service.DefaultRecipesService;
 
 /**
  * Console entry point allowing direct single-file Java execution in VS Code / IDEs.
@@ -12,7 +12,7 @@ public class Application {
 
     public static void main(String[] args) {
         System.out.println("==================================================");
-        System.out.println("  FoodCo Recipes Application (JDK 25)");
+        System.out.println("  Savourly Recipes Application (JDK 25)");
         System.out.println("==================================================");
 
         InMemoryRecipesRepositoryStub repository = new InMemoryRecipesRepositoryStub();

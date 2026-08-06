@@ -1,4 +1,4 @@
-package co.uk.foodco.recipes.cucumber;
+package co.uk.savourly.recipes.cucumber;
 
 import org.junit.platform.suite.api.ConfigurationParameter;
 import org.junit.platform.suite.api.IncludeEngines;
@@ -11,7 +11,7 @@ import static io.cucumber.junit.platform.engine.Constants.PLUGIN_PROPERTY_NAME;
 @Suite
 @IncludeEngines("cucumber")
 @SelectClasspathResource("features")
-@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "co.uk.foodco.recipes.cucumber")
+@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "co.uk.savourly.recipes.cucumber")
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty, html:target/cucumber-reports/cucumber.html, json:target/cucumber-reports/cucumber.json")
 public class RunCucumberTest {
 }

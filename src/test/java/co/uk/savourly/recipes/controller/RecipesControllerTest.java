@@ -1,9 +1,9 @@
-package co.uk.foodco.recipes.controller;
+package co.uk.savourly.recipes.controller;
 
-import co.uk.foodco.recipes.builder.RecipeBuilder;
-import co.uk.foodco.recipes.model.Recipe;
-import co.uk.foodco.recipes.model.Recipes;
-import co.uk.foodco.recipes.service.RecipesService;
+import co.uk.savourly.recipes.builder.RecipeBuilder;
+import co.uk.savourly.recipes.model.Recipe;
+import co.uk.savourly.recipes.model.Recipes;
+import co.uk.savourly.recipes.service.RecipesService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

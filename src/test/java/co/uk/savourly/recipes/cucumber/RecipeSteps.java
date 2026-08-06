@@ -1,11 +1,11 @@
-package co.uk.foodco.recipes.cucumber;
+package co.uk.savourly.recipes.cucumber;
 
-import co.uk.foodco.recipes.model.Ingredient;
-import co.uk.foodco.recipes.model.Recipe;
-import co.uk.foodco.recipes.model.Recipes;
-import co.uk.foodco.recipes.repository.InMemoryRecipesRepositoryStub;
-import co.uk.foodco.recipes.service.DefaultRecipesService;
-import co.uk.foodco.recipes.service.RecipesService;
+import co.uk.savourly.recipes.model.Ingredient;
+import co.uk.savourly.recipes.model.Recipe;
+import co.uk.savourly.recipes.model.Recipes;
+import co.uk.savourly.recipes.repository.InMemoryRecipesRepositoryStub;
+import co.uk.savourly.recipes.service.DefaultRecipesService;
+import co.uk.savourly.recipes.service.RecipesService;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;

@@ -1,9 +1,9 @@
-package co.uk.foodco.recipes.service;
+package co.uk.savourly.recipes.service;
 
-import co.uk.foodco.recipes.model.Recipe;
-import co.uk.foodco.recipes.model.Recipes;
-import co.uk.foodco.recipes.model.User;
-import co.uk.foodco.recipes.repository.RecipesRepository;
+import co.uk.savourly.recipes.model.Recipe;
+import co.uk.savourly.recipes.model.Recipes;
+import co.uk.savourly.recipes.model.User;
+import co.uk.savourly.recipes.repository.RecipesRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

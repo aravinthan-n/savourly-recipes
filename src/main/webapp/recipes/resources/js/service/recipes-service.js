@@ -18,5 +18,5 @@ recipesApp.service('recipesService', ['recipesResource', function (recipesResour
 }]);
 
 recipesApp.factory("recipesResource", ['$resource', function($resource) {
-	return $resource('../foodcompany/recipe');
+	return $resource('../api/recipe');
 }]);
