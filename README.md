@@ -128,8 +128,8 @@ Running tests automatically produces:
    ```
 
 3. Once the server starts, open your browser and navigate to:
-   - **Frontend UI App**: [http://localhost:8080/FoodCo/Recipes/](http://localhost:8080/FoodCo/Recipes/)
-   - **REST API Endpoint**: [http://localhost:8080/FoodCo/foodco/recipes](http://localhost:8080/FoodCo/foodco/recipes)
+   - **Frontend UI App**: [http://localhost:8080/foodcompany/recipe/](http://localhost:8080/foodcompany/recipe/)
+   - **REST API Endpoint**: [http://localhost:8080/foodcompany/foodcompany/recipe](http://localhost:8080/foodcompany/foodcompany/recipe)
 
 ---
 
@@ -145,7 +145,7 @@ mvn jetty:run -Dserver.port=8081
 mvn jetty:run -Dserver.port=9090
 ```
 
-When running on port `8081`, access the app at [http://localhost:8081/FoodCo/Recipes/](http://localhost:8081/FoodCo/Recipes/).
+When running on port `8081`, access the app at [http://localhost:8081/foodcompany/recipe/](http://localhost:8081/foodcompany/recipe/).
 
 ---
 
@@ -176,8 +176,8 @@ mvn jetty:run -Dserver.port=9090 -DtotalRecipes=5
    mvn clean package
    ```
 2. The generated web application archive will be created at:
-   `target/FoodCo.war`
-3. Deploy `FoodCo.war` into your Servlet container (Tomcat 10+, Jetty 11+, or Payara 6+).
+   `target/foodcompany.war`
+3. Deploy `foodcompany.war` into your Servlet container (Tomcat 10+, Jetty 11+, or Payara 6+).
 
 ---
 
@@ -187,7 +187,7 @@ mvn jetty:run -Dserver.port=9090 -DtotalRecipes=5
 2. Configure **JDK 25** as the Project SDK / Java Compiler.
 3. Create a new Maven Run Configuration:
    - **Command**: `jetty:run -Dserver.port=8080`
-4. Click **Run** or **Debug** to start the local web application server on `http://localhost:8080/FoodCo/Recipes/`.
+4. Click **Run** or **Debug** to start the local web application server on `http://localhost:8080/foodcompany/recipe/`.
 
 ---
 

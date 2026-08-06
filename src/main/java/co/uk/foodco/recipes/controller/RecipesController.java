@@ -20,7 +20,7 @@ import java.util.Map;
  * @author Aravinthan Narasimhan
  */
 @RestController
-@RequestMapping("/recipes")
+@RequestMapping("/recipe")
 public class RecipesController {
 
     private static final Logger LOG = LoggerFactory.getLogger(RecipesController.class);

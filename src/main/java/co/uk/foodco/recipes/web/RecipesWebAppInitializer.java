@@ -26,6 +26,6 @@ public class RecipesWebAppInitializer implements WebApplicationInitializer {
                 "recipes-rest", new DispatcherServlet(dispatcherServlet));
         restDispatcher.setLoadOnStartup(1);
         restDispatcher.setAsyncSupported(true);
-        restDispatcher.addMapping("/foodco/*");
+        restDispatcher.addMapping("/foodcompany/*");
     }
 }

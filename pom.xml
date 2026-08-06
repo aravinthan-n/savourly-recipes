@@ -7,11 +7,11 @@
     <packaging>war</packaging>
 
     <properties>
-        <maven.compiler.release>25</maven.compiler.release>
+        <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <app.war.name>FoodCo</app.war.name>
+        <app.war.name>foodcompany</app.war.name>
         <server.port>8080</server.port>
-        <context.path>/FoodCo</context.path>
+        <context.path>/foodcompany</context.path>
 
         <spring.version>6.2.2</spring.version>
         <jackson.version>2.18.2</jackson.version>
@@ -152,7 +152,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
-                    <release>25</release>
+                    <release>${maven.compiler.release}</release>
                 </configuration>
             </plugin>
             <plugin>
