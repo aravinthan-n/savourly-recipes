@@ -80,7 +80,7 @@ A modern, full-stack web application for managing, filtering, searching, and sta
 ## 📂 Project Structure
 
 ```
-recipes-web-app/
+savourly-recipes/
 ├── pom.xml                                   # Maven POM configured for Savourly, JDK 25 & modern dependencies
 ├── README.md                                 # Project documentation
 ├── .gitignore                                # Standard git ignore rules
@@ -142,7 +142,7 @@ Running tests automatically produces:
 
 1. Open your terminal in the project root directory:
    ```bash
-   cd recipes-web-app
+   cd savourly-recipes
    ```
 
 2. Start the application using Jetty Maven plugin (default port `8080`):
