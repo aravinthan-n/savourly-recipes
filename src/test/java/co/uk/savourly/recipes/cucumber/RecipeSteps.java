@@ -239,9 +239,29 @@ public class RecipeSteps {
         }
     }
 
+    @When("a random recipe is requested")
+    public void a_random_recipe_is_requested() {
+        this.currentVisitedRecipe = recipesService.getRandomRecipe();
+    }
+
+    @When("a random recipe is requested when no recipes exist")
+    public void a_random_recipe_is_requested_when_no_recipes_exist() {
+        recipesService.clear();
+        this.currentVisitedRecipe = recipesService.getRandomRecipe();
+        if (this.currentVisitedRecipe == null) {
+            this.currentMessage = "Sorry, we currently have no recipes for you";
+        }
+    }
+
     // ==========================================
     // Then Steps
     // ==========================================
+
+    @Then("a valid random recipe from the system is returned")
+    public void a_valid_random_recipe_from_the_system_is_returned() {
+        assertNotNull(this.currentVisitedRecipe);
+        assertNotNull(this.currentVisitedRecipe.getName());
+    }
 
     @Then("the message {string} is displayed")
     public void the_message_is_displayed(String expectedMessage) {

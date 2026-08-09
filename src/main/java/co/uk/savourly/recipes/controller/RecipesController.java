@@ -83,6 +83,21 @@ public class RecipesController {
     }
 
     /**
+     * Get a random recipe.
+     *
+     * @return Random Recipe object or 404 if no recipes exist
+     */
+    @GetMapping("/random")
+    public ResponseEntity<Recipe> getRandom() {
+        LOG.debug("Fetching random recipe");
+        Recipe recipe = recipesService.getRandomRecipe();
+        if (recipe == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(recipe);
+    }
+
+    /**
      * Filter recipes by search term (name or ingredient).
      */
     @GetMapping("/search")

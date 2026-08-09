@@ -14,9 +14,19 @@ recipesApp.service('recipesService', ['recipesResource', function (recipesResour
         }, function(error) {
             // TODO: handle error
         });
-    }
+    };
+
+    this.getRandomRecipe = function getRandomRecipe(){
+        return recipesResource.getRandom(function(data) {
+            // Empty success handler as promise is returned above.
+        }, function(error) {
+            // TODO: handle error
+        });
+    };
 }]);
 
 recipesApp.factory("recipesResource", ['$resource', function($resource) {
-	return $resource('../api/recipe');
+	return $resource('../api/recipe', {}, {
+        getRandom: { method: 'GET', url: '../api/recipe/random' }
+    });
 }]);

@@ -11,6 +11,7 @@ public interface RecipesService {
     Recipes listRecipes(int pageNo, int itemsPerPage);
 
     Recipe getRecipeByName(String name);
+    Recipe getRandomRecipe();
     Recipes filterRecipesByTerm(String term);
     Recipes filterRecipesByMaxCookingMinutes(int maxMinutes);
 

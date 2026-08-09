@@ -2,15 +2,15 @@
  * Recipes Controller.
  *
  */
-recipesApp.controller('recipeListController', ['$scope', 'recipesService', '$log',
-    function ($scope, recipesService, $log) {
+recipesApp.controller('recipeListController', ['$scope', '$location', 'recipesService', '$log',
+    function ($scope, $location, recipesService, $log) {
 
         var loadRecipes = function loadRecipes(){
             var pageNo = $scope.currentPage;
             recipesService.getRecipes(pageNo).$promise.then(function (recipes) {
                 populateRecipesIntoScope(recipes);
             });
-        }
+        };
 
         var populateRecipesIntoScope = function populateRecipesIntoScope(recipes){
             $scope.recipeList = recipes.recipes;
@@ -19,14 +19,22 @@ recipesApp.controller('recipeListController', ['$scope', 'recipesService', '$log
                 for(var i=0;i<$scope.recipeList.length;i++){
                   var ingredients = "";
                   for(var j=0;j<$scope.recipeList[i].mainIngredients.length;j++){
-                    ingredients = ingredients + $scope.recipeList[i].mainIngredients[j] + ","
+                    ingredients = ingredients + $scope.recipeList[i].mainIngredients[j] + ",";
                   }
                   $scope.recipeList[i].ingredients = ingredients.substring(0,ingredients.lastIndexOf(",")) ;
                 }
             }else{
                 $scope.hasRecipes = false;
             }
-        }
+        };
+
+        $scope.getSurpriseRecipe = function getSurpriseRecipe() {
+            recipesService.getRandomRecipe().$promise.then(function (recipe) {
+                if (recipe && recipe.name) {
+                    $location.path('/recipe/' + (recipe.id || '1') + '/' + recipe.name);
+                }
+            });
+        };
 
         //Populate the scope.
         var defineScope = function defineScope() {
@@ -37,7 +45,7 @@ recipesApp.controller('recipeListController', ['$scope', 'recipesService', '$log
             $scope.pageChanged = function(){
                 $log.log('Page changed to: ' + $scope.currentPage);
                 loadRecipes();
-            }
+            };
             loadRecipes();
         };
 

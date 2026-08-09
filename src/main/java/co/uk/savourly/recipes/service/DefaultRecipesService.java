@@ -57,6 +57,17 @@ public class DefaultRecipesService implements RecipesService {
     }
 
     @Override
+    public Recipe getRandomRecipe() {
+        Recipes all = recipesRepository.findAll();
+        List<Recipe> recipes = all != null && all.getRecipes() != null ? all.getRecipes() : new ArrayList<>();
+        if (recipes.isEmpty()) {
+            return null;
+        }
+        int randomIndex = java.util.concurrent.ThreadLocalRandom.current().nextInt(recipes.size());
+        return recipes.get(randomIndex);
+    }
+
+    @Override
     public Recipes filterRecipesByTerm(String term) {
         Recipes all = recipesRepository.findAll();
         List<Recipe> source = all != null && all.getRecipes() != null ? all.getRecipes() : new ArrayList<>();
