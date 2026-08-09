@@ -16,7 +16,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Fetch all history for precise git diff calculations
-
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.PRISM_REVIEWER_APP_ID }}
+          private-key: ${{ secrets.PRISM_REVIEWER_PRIVATE_KEY }}
       - name: Set Up Python
         uses: actions/setup-python@v5
         with:
