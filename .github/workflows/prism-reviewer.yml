@@ -1,8 +1,8 @@
-name: Prism Reviewer Code Review
+name: Prism Reviewer AI PR Review
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, reopened]
 
 permissions:
   contents: read
@@ -10,58 +10,44 @@ permissions:
 
 jobs:
   review:
+    name: Run Prism Reviewer AI
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Codebase
+      - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Fetch all history for precise git diff calculations
+          # Fetch all history so git diff can compare against target branch
+          fetch-depth: 0
+
       - name: Generate GitHub App Token
         id: app-token
         uses: actions/create-github-app-token@v1
+        continue-on-error: true
         with:
           app-id: ${{ secrets.PRISM_REVIEWER_APP_ID }}
           private-key: ${{ secrets.PRISM_REVIEWER_PRIVATE_KEY }}
-      - name: Set Up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-          cache: "pip"
 
-      - name: Install Prism Reviewer
+      - name: Resolve GitHub Token
+        id: resolve-token
         run: |
-          pip install --upgrade pip
-          pip install prism-reviewer
+          if [ -n "${{ steps.app-token.outputs.token }}" ]; then
+            echo "token=${{ steps.app-token.outputs.token }}" >> $GITHUB_OUTPUT
+            echo "Using custom GitHub App token for posting review comments."
+          else
+            echo "token=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_OUTPUT
+            echo "GitHub App secrets not found. Falling back to GITHUB_TOKEN."
+          fi
+        shell: bash
 
-      - name: Run Deterministic Code Review
-        env:
-          # Credentials & Model Config
-          LLM_PROVIDER_API_KEY: ${{ secrets.LLM_PROVIDER_API_KEY }}
-          LLM_MODEL_NAME: "gemini/gemini-3.1-flash-lite" # or any model supported by LiteLLM
-          
-          # Optional environment overrides for prism_reviewer.toml
-          AGENTS_MODE: "parallel"
-          MAX_REGION_LINES: "500"
-          WARDEN_REASONING_EFFORT: "high"
-        run: |
-          # 1. Run the core review graph on the PR's local unstaged/staged diff
-          # This generates prism_review_report.md
-          prism-review --pr --base origin/${{ github.base_ref }}
-
-      - name: Publish Review Comment
-        uses: actions/github-script@v7
+      - name: Run Prism Reviewer AI
+        uses: vyoman-labs/prism-reviewer@v0.1.0
         with:
-          script: |
-            const fs = require('fs');
-            const path = 'prism_review_report.md';
-            if (fs.existsSync(path)) {
-              const body = fs.readFileSync(path, 'utf8');
-              github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: body
-              });
-            } else {
-              core.warning('No Prism Reviewer report file found.');
-            }
+          # Required: API key for your LLM Provider (Gemini, OpenRouter, OpenAI, Anthropic, etc.)
+          llm-api-key: ${{ secrets.LLM_PROVIDER_API_KEY }}
+
+          # Optional: Model identifier (defaults to gemini/gemini-3.1-flash-lite)
+          llm-model-name: 'gemini/gemini-3.1-flash-lite'
+
+          # Optional: Custom GitHub token (GitHub App Installation token, PAT, or default GITHUB_TOKEN)
+          # Default: ${{ github.token }} (posts comment as github-actions[bot])
+          github-token: ${{ secrets.GITHUB_TOKEN }}
