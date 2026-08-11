@@ -26,6 +26,7 @@ jobs:
         with:
           app-id: ${{ secrets.PRISM_REVIEWER_APP_ID }}
           private-key: ${{ secrets.PRISM_REVIEWER_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
 
       - name: Resolve GitHub Token
         id: resolve-token
