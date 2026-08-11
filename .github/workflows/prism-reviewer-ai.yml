@@ -27,6 +27,7 @@ jobs:
           app-id: ${{ secrets.PRISM_REVIEWER_APP_ID }}
           private-key: ${{ secrets.PRISM_REVIEWER_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
 
       - name: Resolve GitHub Token
         id: resolve-token
@@ -51,6 +52,6 @@ jobs:
 
           # Optional: Custom GitHub token (GitHub App Installation token, PAT, or default GITHUB_TOKEN)
           # Default: ${{ github.token }} (posts comment as github-actions[bot])
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ steps.resolve-token.outputs.token }}
         env:
           WARDEN_REASONING_EFFORT: ${{ vars.WARDEN_REASONING_EFFORT }}
