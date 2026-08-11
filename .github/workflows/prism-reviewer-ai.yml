@@ -46,7 +46,7 @@ jobs:
           llm-api-key: ${{ secrets.LLM_PROVIDER_API_KEY }}
 
           # Optional: Model identifier (defaults to gemini/gemini-3.1-flash-lite)
-          llm-model-name: 'gemini/gemini-3.1-flash-lite'
+          llm-model-name: ${{ vars.LLM_MODEL }}
 
           # Optional: Custom GitHub token (GitHub App Installation token, PAT, or default GITHUB_TOKEN)
           # Default: ${{ github.token }} (posts comment as github-actions[bot])
