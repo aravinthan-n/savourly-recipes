@@ -51,3 +51,5 @@ jobs:
           # Optional: Custom GitHub token (GitHub App Installation token, PAT, or default GITHUB_TOKEN)
           # Default: ${{ github.token }} (posts comment as github-actions[bot])
           github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          WARDEN_REASONING_EFFORT: ${{ vars.WARDEN_REASONING_EFFORT }}
