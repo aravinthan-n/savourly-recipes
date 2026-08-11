@@ -131,23 +131,23 @@ public class DefaultRecipesServiceTest {
     @Test
     @DisplayName("Should return random recipe when recipes exist")
     public void testGetRandomRecipeWhenRecipesExist() {
-        Recipes recipes = new Recipes();
-        recipes.setRecipes(RecipeBuilder.getThreeRecipes());
-        when(mockRecipesRepository.findAll()).thenReturn(recipes);
+        Recipe expectedRecipe = RecipeBuilder.getThreeRecipes().get(0);
+        when(mockRecipesRepository.findRandom()).thenReturn(expectedRecipe);
 
         Recipe randomRecipe = recipesService.getRandomRecipe();
         assertNotNull(randomRecipe);
-        assertTrue(RecipeBuilder.getThreeRecipes().stream()
-                .anyMatch(r -> r.getName().equals(randomRecipe.getName())));
+        assertEquals(expectedRecipe.getName(), randomRecipe.getName());
+        verify(mockRecipesRepository, times(1)).findRandom();
     }
 
     @Test
     @DisplayName("Should return null when getting random recipe from empty system")
     public void testGetRandomRecipeWhenNoRecipesExist() {
-        when(mockRecipesRepository.findAll()).thenReturn(new Recipes());
+        when(mockRecipesRepository.findRandom()).thenReturn(null);
 
         Recipe randomRecipe = recipesService.getRandomRecipe();
         assertNull(randomRecipe);
+        verify(mockRecipesRepository, times(1)).findRandom();
     }
 
     @Test
