@@ -1,0 +1,50 @@
+# Target build directory & artifacts
+target/
+*.war
+*.jar
+*.ear
+
+# Maven local & tool directories
+.maven/
+.m2/
+
+# IDE files and directories
+.idea/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+.nb-gradle/
+.nb-properties/
+nbproject/
+.vscode/
+
+# Git directory
+.git/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Log files
+*.log
+logs/
+
+# Secrets and environment files
+*.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# Agent/Temp files
+.antigravity/
+.gemini/
+.claude/

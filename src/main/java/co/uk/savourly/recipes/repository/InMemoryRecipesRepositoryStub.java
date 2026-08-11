@@ -41,10 +41,14 @@ public class InMemoryRecipesRepositoryStub implements RecipesRepository {
     @Override
     public synchronized Recipe findRandom() {
         List<Recipe> source = customized ? dynamicRecipes : getDefaultRecipes();
-        if (source.isEmpty()) {
+        if (source == null) {
             return null;
         }
-        int index = ThreadLocalRandom.current().nextInt(source.size());
+        int size = source.size();
+        if (size <= 0) {
+            return null;
+        }
+        int index = ThreadLocalRandom.current().nextInt(size);
         return source.get(index);
     }
 

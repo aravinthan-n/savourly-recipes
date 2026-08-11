@@ -43,4 +43,11 @@ class InMemoryRecipesRepositoryStubTest {
         assertNotNull(random);
         assertEquals("Custom Pasta", random.getName());
     }
+
+    @Test
+    void testFindRandomWhenEmptyReturnsNull() {
+        repository.clear();
+        Recipe random = repository.findRandom();
+        assertNull(random);
+    }
 }
