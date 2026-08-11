@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Repository("inMemoryRecipesRepositoryStub")
 public class InMemoryRecipesRepositoryStub implements RecipesRepository {
@@ -34,6 +35,16 @@ public class InMemoryRecipesRepositoryStub implements RecipesRepository {
         recipes.setRecipes(recipeList);
         recipes.setTotalItems(recipeList.size());
         return recipes;
+    }
+
+    @Override
+    public synchronized Recipe findRandom() {
+        List<Recipe> source = customized ? new ArrayList<>(dynamicRecipes) : getDefaultRecipes();
+        if (source.isEmpty()) {
+            return null;
+        }
+        int index = ThreadLocalRandom.current().nextInt(source.size());
+        return source.get(index);
     }
 
     private List<Recipe> getDefaultRecipes() {

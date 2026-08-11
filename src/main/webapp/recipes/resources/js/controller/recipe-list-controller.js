@@ -30,8 +30,8 @@ recipesApp.controller('recipeListController', ['$scope', '$location', 'recipesSe
 
         $scope.getSurpriseRecipe = function getSurpriseRecipe() {
             recipesService.getRandomRecipe().$promise.then(function (recipe) {
-                if (recipe && recipe.name) {
-                    $location.path('/recipe/' + (recipe.id || '1') + '/' + recipe.name);
+                if (recipe && recipe.id && recipe.name) {
+                    $location.path('/recipe/' + recipe.id + '/' + recipe.name);
                 }
             });
         };
