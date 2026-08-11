@@ -22,6 +22,7 @@ public class InMemoryRecipesRepositoryStub implements RecipesRepository {
     private final List<Recipe> dynamicRecipes = new ArrayList<>();
     private final Map<String, User> userMap = new HashMap<>();
     private boolean customized = false;
+    private List<Recipe> cachedDefaultRecipes;
 
     @Override
     public synchronized Recipes findAll() {
@@ -39,7 +40,7 @@ public class InMemoryRecipesRepositoryStub implements RecipesRepository {
 
     @Override
     public synchronized Recipe findRandom() {
-        List<Recipe> source = customized ? new ArrayList<>(dynamicRecipes) : getDefaultRecipes();
+        List<Recipe> source = customized ? dynamicRecipes : getDefaultRecipes();
         if (source.isEmpty()) {
             return null;
         }
@@ -48,21 +49,27 @@ public class InMemoryRecipesRepositoryStub implements RecipesRepository {
     }
 
     private List<Recipe> getDefaultRecipes() {
-        int totalRecipes = 12;
-        try {
-            totalRecipes = Integer.parseInt(totalRecipeToBuild);
-        } catch (NumberFormatException ignored) {
-        }
+        if (cachedDefaultRecipes == null) {
+            int totalRecipes = 12;
+            try {
+                if (totalRecipeToBuild != null) {
+                    totalRecipes = Integer.parseInt(totalRecipeToBuild);
+                }
+            } catch (NumberFormatException ignored) {
+            }
 
-        if (totalRecipes == 0) {
-            return Collections.emptyList();
+            if (totalRecipes == 0) {
+                cachedDefaultRecipes = Collections.emptyList();
+            } else {
+                List<Recipe> all = createSampleRecipes();
+                if (totalRecipes >= all.size()) {
+                    cachedDefaultRecipes = all;
+                } else {
+                    cachedDefaultRecipes = new ArrayList<>(all.subList(0, totalRecipes));
+                }
+            }
         }
-
-        List<Recipe> all = createSampleRecipes();
-        if (totalRecipes >= all.size()) {
-            return all;
-        }
-        return new ArrayList<>(all.subList(0, totalRecipes));
+        return cachedDefaultRecipes;
     }
 
     private List<Recipe> createSampleRecipes() {
