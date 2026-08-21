@@ -42,7 +42,7 @@ jobs:
         shell: bash
       
       - name: Install Telemetry Dependencies
-        run: pip install langfuse
+        run: pip install "langfuse>=2.0.0,<3.0.0"
 
       - name: Run Prism Reviewer AI
         uses: vyoman-labs/prism-reviewer@main

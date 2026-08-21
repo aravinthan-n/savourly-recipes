@@ -50,29 +50,33 @@ public class InMemoryRecipesRepositoryStub implements RecipesRepository {
             return null;
         }
 
-        int size = source.size();
         boolean hasExcludeId = excludeId != null && !excludeId.trim().isEmpty();
-
         if (hasExcludeId) {
-            for (int attempt = 0; attempt < 3; attempt++) {
-                int index = ThreadLocalRandom.current().nextInt(size);
-                Recipe candidate = source.get(index);
-                if (candidate != null && !excludeId.equals(candidate.getId())) {
-                    return candidate;
+            List<Recipe> filtered = new ArrayList<>();
+            for (Recipe r : source) {
+                if (r != null && !excludeId.equals(r.getId())) {
+                    filtered.add(r);
                 }
             }
-
-            int startIndex = ThreadLocalRandom.current().nextInt(size);
-            for (int i = 0; i < size; i++) {
-                Recipe candidate = source.get((startIndex + i) % size);
-                if (candidate != null && !excludeId.equals(candidate.getId())) {
-                    return candidate;
-                }
+            if (!filtered.isEmpty()) {
+                int index = ThreadLocalRandom.current().nextInt(filtered.size());
+                return filtered.get(index);
             }
         }
 
-        int index = ThreadLocalRandom.current().nextInt(size);
-        return source.get(index);
+        List<Recipe> nonNullRecipes = new ArrayList<>();
+        for (Recipe r : source) {
+            if (r != null) {
+                nonNullRecipes.add(r);
+            }
+        }
+
+        if (nonNullRecipes.isEmpty()) {
+            return null;
+        }
+
+        int index = ThreadLocalRandom.current().nextInt(nonNullRecipes.size());
+        return nonNullRecipes.get(index);
     }
 
     private List<Recipe> getDefaultRecipes() {
