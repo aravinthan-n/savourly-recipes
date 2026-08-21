@@ -28,12 +28,11 @@ recipesApp.controller('recipeListController', ['$scope', '$location', 'recipesSe
             }
         };
 
-        var lastPickedRecipeId = null;
         $scope.getSurpriseRecipe = function getSurpriseRecipe(excludeId) {
-            var targetExclude = excludeId || lastPickedRecipeId;
+            var targetExclude = excludeId || $scope.lastPickedRecipeId;
             recipesService.getRandomRecipe(targetExclude).$promise.then(function (recipe) {
                 if (recipe && recipe.id && recipe.name) {
-                    lastPickedRecipeId = recipe.id;
+                    $scope.lastPickedRecipeId = recipe.id;
                     $location.path('/recipe/' + recipe.id + '/' + recipe.name);
                 }
             });
@@ -45,6 +44,7 @@ recipesApp.controller('recipeListController', ['$scope', '$location', 'recipesSe
             $scope.hasRecipes = true;
             $scope.currentPage = 1;
             $scope.totalItems = 0;
+            $scope.lastPickedRecipeId = null;
             $scope.pageChanged = function(){
                 $log.log('Page changed to: ' + $scope.currentPage);
                 loadRecipes();

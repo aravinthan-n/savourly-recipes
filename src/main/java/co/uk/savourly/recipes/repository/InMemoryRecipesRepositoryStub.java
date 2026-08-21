@@ -50,21 +50,29 @@ public class InMemoryRecipesRepositoryStub implements RecipesRepository {
             return null;
         }
 
-        List<Recipe> candidates = source;
-        if (excludeId != null && !excludeId.trim().isEmpty() && source.size() > 1) {
-            List<Recipe> filtered = new ArrayList<>();
-            for (Recipe r : source) {
-                if (r != null && !excludeId.equals(r.getId())) {
-                    filtered.add(r);
+        int size = source.size();
+        boolean hasExcludeId = excludeId != null && !excludeId.trim().isEmpty();
+
+        if (hasExcludeId) {
+            for (int attempt = 0; attempt < 3; attempt++) {
+                int index = ThreadLocalRandom.current().nextInt(size);
+                Recipe candidate = source.get(index);
+                if (candidate != null && !excludeId.equals(candidate.getId())) {
+                    return candidate;
                 }
             }
-            if (!filtered.isEmpty()) {
-                candidates = filtered;
+
+            int startIndex = ThreadLocalRandom.current().nextInt(size);
+            for (int i = 0; i < size; i++) {
+                Recipe candidate = source.get((startIndex + i) % size);
+                if (candidate != null && !excludeId.equals(candidate.getId())) {
+                    return candidate;
+                }
             }
         }
 
-        int index = ThreadLocalRandom.current().nextInt(candidates.size());
-        return candidates.get(index);
+        int index = ThreadLocalRandom.current().nextInt(size);
+        return source.get(index);
     }
 
     private List<Recipe> getDefaultRecipes() {
