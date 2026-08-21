@@ -52,31 +52,27 @@ public class InMemoryRecipesRepositoryStub implements RecipesRepository {
 
         boolean hasExcludeId = excludeId != null && !excludeId.trim().isEmpty();
         if (hasExcludeId) {
-            List<Recipe> filtered = new ArrayList<>();
-            for (Recipe r : source) {
-                if (r != null && !excludeId.equals(r.getId())) {
-                    filtered.add(r);
+            Recipe selected = selectRandomMatching(source, excludeId);
+            if (selected != null) {
+                return selected;
+            }
+        }
+
+        return selectRandomMatching(source, null);
+    }
+
+    private Recipe selectRandomMatching(List<Recipe> source, String excludeId) {
+        Recipe candidate = null;
+        int count = 0;
+        for (Recipe r : source) {
+            if (r != null && (excludeId == null || !excludeId.equals(r.getId()))) {
+                count++;
+                if (ThreadLocalRandom.current().nextInt(count) == 0) {
+                    candidate = r;
                 }
             }
-            if (!filtered.isEmpty()) {
-                int index = ThreadLocalRandom.current().nextInt(filtered.size());
-                return filtered.get(index);
-            }
         }
-
-        List<Recipe> nonNullRecipes = new ArrayList<>();
-        for (Recipe r : source) {
-            if (r != null) {
-                nonNullRecipes.add(r);
-            }
-        }
-
-        if (nonNullRecipes.isEmpty()) {
-            return null;
-        }
-
-        int index = ThreadLocalRandom.current().nextInt(nonNullRecipes.size());
-        return nonNullRecipes.get(index);
+        return candidate;
     }
 
     private List<Recipe> getDefaultRecipes() {

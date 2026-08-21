@@ -33,3 +33,4 @@ logs/
 
 # Agent/Temp files
 .antigravity/
+job_log.txt
