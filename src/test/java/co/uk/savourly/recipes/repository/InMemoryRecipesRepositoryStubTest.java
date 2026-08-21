@@ -50,4 +50,18 @@ class InMemoryRecipesRepositoryStubTest {
         Recipe random = repository.findRandom();
         assertNull(random);
     }
+
+    @Test
+    void testFindRandomWithExcludeId() {
+        repository.clear();
+        Recipe r1 = new Recipe("1", "Pasta", 15);
+        Recipe r2 = new Recipe("2", "Pizza", 20);
+        repository.save(r1);
+        repository.save(r2);
+
+        Recipe selected = repository.findRandom("1");
+        assertNotNull(selected);
+        assertEquals("2", selected.getId());
+        assertEquals("Pizza", selected.getName());
+    }
 }

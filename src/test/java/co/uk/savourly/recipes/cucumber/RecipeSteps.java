@@ -253,6 +253,13 @@ public class RecipeSteps {
         }
     }
 
+    @When("a random recipe is requested excluding recipe {string}")
+    public void a_random_recipe_is_requested_excluding_recipe(String recipeName) {
+        Recipe excluded = recipesService.getRecipeByName(recipeName);
+        String excludeId = excluded != null ? excluded.getId() : null;
+        this.currentVisitedRecipe = recipesService.getRandomRecipe(excludeId);
+    }
+
     // ==========================================
     // Then Steps
     // ==========================================
@@ -261,6 +268,12 @@ public class RecipeSteps {
     public void a_valid_random_recipe_from_the_system_is_returned() {
         assertNotNull(this.currentVisitedRecipe);
         assertNotNull(this.currentVisitedRecipe.getName());
+    }
+
+    @Then("the recipe {string} is returned")
+    public void the_recipe_is_returned(String recipeName) {
+        assertNotNull(this.currentVisitedRecipe, "Expected a returned recipe");
+        assertEquals(recipeName, this.currentVisitedRecipe.getName());
     }
 
     @Then("the message {string} is displayed")

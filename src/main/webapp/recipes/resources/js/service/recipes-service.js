@@ -16,8 +16,12 @@ recipesApp.service('recipesService', ['recipesResource', function (recipesResour
         });
     };
 
-    this.getRandomRecipe = function getRandomRecipe(){
-        return recipesResource.getRandom(function(data) {
+    this.getRandomRecipe = function getRandomRecipe(excludeId){
+        var param = {};
+        if (excludeId) {
+            param.excludeId = excludeId;
+        }
+        return recipesResource.getRandom(param, function(data) {
             // Empty success handler as promise is returned above.
         }, function(error) {
             // TODO: handle error

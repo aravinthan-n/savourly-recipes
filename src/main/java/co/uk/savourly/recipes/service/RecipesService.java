@@ -12,6 +12,7 @@ public interface RecipesService {
 
     Recipe getRecipeByName(String name);
     Recipe getRandomRecipe();
+    Recipe getRandomRecipe(String excludeId);
     Recipes filterRecipesByTerm(String term);
     Recipes filterRecipesByMaxCookingMinutes(int maxMinutes);
 

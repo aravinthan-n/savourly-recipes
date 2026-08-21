@@ -40,16 +40,31 @@ public class InMemoryRecipesRepositoryStub implements RecipesRepository {
 
     @Override
     public synchronized Recipe findRandom() {
+        return findRandom(null);
+    }
+
+    @Override
+    public synchronized Recipe findRandom(String excludeId) {
         List<Recipe> source = customized ? dynamicRecipes : getDefaultRecipes();
-        if (source == null) {
+        if (source == null || source.isEmpty()) {
             return null;
         }
-        int size = source.size();
-        if (size <= 0) {
-            return null;
+
+        List<Recipe> candidates = source;
+        if (excludeId != null && !excludeId.trim().isEmpty() && source.size() > 1) {
+            List<Recipe> filtered = new ArrayList<>();
+            for (Recipe r : source) {
+                if (r != null && !excludeId.equals(r.getId())) {
+                    filtered.add(r);
+                }
+            }
+            if (!filtered.isEmpty()) {
+                candidates = filtered;
+            }
         }
-        int index = ThreadLocalRandom.current().nextInt(size);
-        return source.get(index);
+
+        int index = ThreadLocalRandom.current().nextInt(candidates.size());
+        return candidates.get(index);
     }
 
     private List<Recipe> getDefaultRecipes() {

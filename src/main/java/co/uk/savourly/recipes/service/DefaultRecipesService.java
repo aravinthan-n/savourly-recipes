@@ -58,11 +58,16 @@ public class DefaultRecipesService implements RecipesService {
 
     @Override
     public Recipe getRandomRecipe() {
+        return getRandomRecipe(null);
+    }
+
+    @Override
+    public Recipe getRandomRecipe(String excludeId) {
         // Delegates random selection to the repository so each implementation can avoid
         // loading the full dataset into memory (e.g. a DB-backed repo can use COUNT + OFFSET).
         // Returns null — not a fallback recipe — when no recipes exist, so callers can
         // respond with an explicit 404 rather than silently navigating to a wrong record.
-        Recipe recipe = recipesRepository.findRandom();
+        Recipe recipe = recipesRepository.findRandom(excludeId);
         if (recipe == null) {
             // No recipes are stored; surface this explicitly rather than returning an
             // arbitrary placeholder that would cause a silent failure.

@@ -16,3 +16,11 @@ Feature: Random Recipe / Surprise Me
   Scenario: Request a random recipe when no recipes exist
     When a random recipe is requested when no recipes exist
     Then the message "Sorry, we currently have no recipes for you" is displayed
+
+  Scenario: Request a random recipe excluding a specific recipe
+    Given the following recipes exist in the system:
+      | Name            | Cooking Time | Main Ingredients         |
+      | Lemon Chicken   | 30 minutes   | Chicken, Lemon, Thyme    |
+      | Beef Stroganoff | 30 minutes   | Beef, Mustard, Mushrooms |
+    When a random recipe is requested excluding recipe "Lemon Chicken"
+    Then the recipe "Beef Stroganoff" is returned
