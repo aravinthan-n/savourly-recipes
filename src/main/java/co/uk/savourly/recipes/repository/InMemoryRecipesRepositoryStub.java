@@ -61,6 +61,13 @@ public class InMemoryRecipesRepositoryStub implements RecipesRepository {
         return selectRandomMatching(source, null);
     }
 
+    /**
+     * Selects a random recipe from the given list, optionally excluding a specific recipe ID.
+     *
+     * @param source the list of recipes to choose from
+     * @param excludeId the recipe ID to exclude from selection, or null if no recipe should be excluded
+     * @return a randomly selected matching recipe, or null if no matching recipe is available
+     */
     private Recipe selectRandomMatching(List<Recipe> source, String excludeId) {
         Recipe candidate = null;
         int count = 0;
