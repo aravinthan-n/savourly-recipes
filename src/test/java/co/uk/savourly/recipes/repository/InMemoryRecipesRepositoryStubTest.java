@@ -86,4 +86,44 @@ class InMemoryRecipesRepositoryStubTest {
         assertNotNull(selected);
         assertEquals("1", selected.getId());
     }
+
+    @Test
+    void testConcurrentGetDefaultRecipes() throws InterruptedException {
+        int threadCount = 20;
+        java.util.concurrent.ExecutorService executor = java.util.concurrent.Executors.newFixedThreadPool(threadCount);
+        java.util.concurrent.CountDownLatch latch = new java.util.concurrent.CountDownLatch(1);
+        java.util.concurrent.atomic.AtomicInteger successCount = new java.util.concurrent.atomic.AtomicInteger(0);
+
+        for (int i = 0; i < threadCount; i++) {
+            executor.submit(() -> {
+                try {
+                    latch.await();
+                    InMemoryRecipesRepositoryStub repo = new InMemoryRecipesRepositoryStub();
+                    Recipe random = repo.findRandom();
+                    if (random != null) {
+                        successCount.incrementAndGet();
+                    }
+                } catch (Exception e) {
+                    // ignore
+                }
+            });
+        }
+
+        latch.countDown();
+        executor.shutdown();
+        assertTrue(executor.awaitTermination(5, java.util.concurrent.TimeUnit.SECONDS));
+        assertEquals(threadCount, successCount.get());
+    }
+
+    @Test
+    void testSelectRandomMatchingWithLargeDataset() {
+        repository.clear();
+        for (int i = 0; i < 1000; i++) {
+            repository.save(new Recipe(String.valueOf(i), "Recipe " + i, 20));
+        }
+
+        Recipe random = repository.findRandom("500");
+        assertNotNull(random);
+        assertNotEquals("500", random.getId());
+    }
 }

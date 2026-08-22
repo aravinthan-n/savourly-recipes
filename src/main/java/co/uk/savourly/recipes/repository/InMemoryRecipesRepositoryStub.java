@@ -69,41 +69,75 @@ public class InMemoryRecipesRepositoryStub implements RecipesRepository {
      * @return a randomly selected matching recipe, or null if no matching recipe is available
      */
     private Recipe selectRandomMatching(List<Recipe> source, String excludeId) {
-        Recipe candidate = null;
-        int count = 0;
+        if (source == null || source.isEmpty()) {
+            return null;
+        }
+
+        int size = source.size();
+        if (excludeId == null) {
+            return source.get(ThreadLocalRandom.current().nextInt(size));
+        }
+
+        int idx = ThreadLocalRandom.current().nextInt(size);
+        Recipe candidate = source.get(idx);
+        if (candidate != null && !excludeId.equals(candidate.getId())) {
+            return candidate;
+        }
+
+        if (size == 1) {
+            return null;
+        }
+
+        int candidateIdx = ThreadLocalRandom.current().nextInt(size - 1);
+        if (candidateIdx >= idx) {
+            candidateIdx++;
+        }
+        candidate = source.get(candidateIdx);
+        if (candidate != null && !excludeId.equals(candidate.getId())) {
+            return candidate;
+        }
+
+        List<Recipe> matching = new ArrayList<>(size);
         for (Recipe r : source) {
-            if (r != null && (excludeId == null || !excludeId.equals(r.getId()))) {
-                count++;
-                if (ThreadLocalRandom.current().nextInt(count) == 0) {
-                    candidate = r;
-                }
+            if (r != null && !excludeId.equals(r.getId())) {
+                matching.add(r);
             }
         }
-        return candidate;
+        if (matching.isEmpty()) {
+            return null;
+        }
+        return matching.get(ThreadLocalRandom.current().nextInt(matching.size()));
     }
 
     private List<Recipe> getDefaultRecipes() {
-        if (cachedDefaultRecipes == null) {
-            int totalRecipes = 12;
-            try {
-                if (totalRecipeToBuild != null) {
-                    totalRecipes = Integer.parseInt(totalRecipeToBuild);
-                }
-            } catch (NumberFormatException ignored) {
-            }
+        List<Recipe> result = cachedDefaultRecipes;
+        if (result == null) {
+            synchronized (this) {
+                result = cachedDefaultRecipes;
+                if (result == null) {
+                    int totalRecipes = 12;
+                    try {
+                        if (totalRecipeToBuild != null) {
+                            totalRecipes = Integer.parseInt(totalRecipeToBuild);
+                        }
+                    } catch (NumberFormatException ignored) {
+                    }
 
-            if (totalRecipes == 0) {
-                cachedDefaultRecipes = Collections.emptyList();
-            } else {
-                List<Recipe> all = createSampleRecipes();
-                if (totalRecipes >= all.size()) {
-                    cachedDefaultRecipes = all;
-                } else {
-                    cachedDefaultRecipes = new ArrayList<>(all.subList(0, totalRecipes));
+                    if (totalRecipes == 0) {
+                        result = Collections.emptyList();
+                    } else {
+                        List<Recipe> all = createSampleRecipes();
+                        if (totalRecipes >= all.size()) {
+                            result = all;
+                        } else {
+                            result = new ArrayList<>(all.subList(0, totalRecipes));
+                        }
+                    }
+                    cachedDefaultRecipes = result;
                 }
             }
         }
-        return cachedDefaultRecipes;
+        return result;
     }
 
     private List<Recipe> createSampleRecipes() {
