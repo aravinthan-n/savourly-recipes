@@ -54,7 +54,7 @@ jobs:
           # Default: ${{ github.token }} (posts comment as github-actions[bot])
           github-token: ${{ steps.resolve-token.outputs.token }}
           enable-monitoring: 'true'
-          lite-llm-callbacks: ${{ vars.PRISM_MONITORING_LITELLM_CALLBACKS }}
+          litellm-callbacks: ${{ vars.PRISM_MONITORING_LITELLM_CALLBACKS }}
         env:
           WARDEN_REASONING_EFFORT: ${{ vars.WARDEN_REASONING_EFFORT }}
           LANGFUSE_SECRET_KEY: ${{ secrets.LANGFUSE_SECRET_KEY }}
