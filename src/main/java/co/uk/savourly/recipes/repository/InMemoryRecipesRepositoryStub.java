@@ -22,7 +22,7 @@ public class InMemoryRecipesRepositoryStub implements RecipesRepository {
     private final List<Recipe> dynamicRecipes = new ArrayList<>();
     private final Map<String, User> userMap = new HashMap<>();
     private boolean customized = false;
-    private List<Recipe> cachedDefaultRecipes;
+    private volatile List<Recipe> cachedDefaultRecipes;
 
     @Override
     public synchronized Recipes findAll() {
